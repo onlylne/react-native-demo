@@ -9,7 +9,10 @@ yarn # or npm install
 react-native run-ios # or react-native run-android
 ```
 
-## Advance
+## Others Component
+
+[antd-mobile](https://mobile.ant.design/docs/react/introduce-cn)
+[react-native-picker](https://github.com/beefe/react-native-picker)
 
 ## LICENSE
 
