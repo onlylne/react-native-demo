@@ -1,5 +1,5 @@
 import {createAction, NavigationActions, Storage} from '../utils'
-import * as authService from '../services/auth'
+import {login} from '../services/auth'
 import {Toast} from 'antd-mobile'
 
 export default {
@@ -23,37 +23,47 @@ export default {
         yield put(
           NavigationActions.reset({
             index: 0,
-            actions: [NavigationActions.navigate({ routeName: 'Main' })],
+            actions: [NavigationActions.navigate({routeName: 'Main'})],
           })
         )
       }
-      yield put(createAction('updateState')({ loading: false}))
+      yield put(createAction('updateState')({loading: false}))
     },
     * login({payload}, {call, put}) {
       Toast.loading('登录中...', 0);
       // yield put(createAction('updateState')({ fetching: true }))
-      const { success, user } = yield call(authService.login, payload)
-      if (success) {
+      // const { success, user } = yield call(login, payload)
+      const data = yield call(login, payload)
+
+      if (data.success) {
         Toast.hide();
         yield put(
           NavigationActions.reset({
             index: 0,
-            actions: [NavigationActions.navigate({ routeName: 'Main' })],
+            actions: [NavigationActions.navigate({routeName: 'Main'})],
           })
         )
+        let user = {
+          username: 'joiner',
+          headImg: '',
+          gander: 1,
+          ercode: '',
+          area: '四川 成都',
+          signature: '大概是个傻子吧！',
+        }
+        // // yield put(createAction('updateState')({ login, fetching: false }))
+        Storage.set('userInfo', user)
       }
-      // yield put(createAction('updateState')({ login, fetching: false }))
-      Storage.set('userInfo', user)
     },
     * logout(action, {call, put}) {
       yield call(Storage.clear)
       yield put(
-        NavigationActions.navigate({ routeName: 'Login' })
+        NavigationActions.navigate({routeName: 'Login'})
       )
       yield put(
         NavigationActions.reset({
           index: 0,
-          actions: [NavigationActions.navigate({ routeName: 'Login' })],
+          actions: [NavigationActions.navigate({routeName: 'Login'})],
         })
       )
     },

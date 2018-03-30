@@ -29,8 +29,12 @@ class Login extends Component {
       AlertIOS.alert('提示', '请输入密码', null, null);
       return;
     }
+    let identifier = username
+    let credential = password
+    let identityType = 'app'
+    let remember = true
 
-    this.props.dispatch(createAction('app/login')({username, password}))
+    this.props.dispatch(createAction('app/login')({identifier, credential, identityType, remember}))
   };
 
   render() {

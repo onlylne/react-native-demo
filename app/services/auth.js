@@ -1,17 +1,12 @@
-import { delay } from '../utils'
+import { delay, request } from '../utils'
+import api from '../config/api'
 
-export const login = async () => {
-  await delay(2000)
+const { auth } = api;
 
-  return {
-    success: true,
-    user: {
-      username: 'joiner',
-      headImg: '',
-      gander: 1,
-      ercode: '',
-      area: '四川 成都',
-      signature: '大概是个傻子吧！',
-    }
-  }
+export async function login (params) {
+  return request({
+    url: auth.login,
+    method: 'get',
+    data: params,
+  })
 }
