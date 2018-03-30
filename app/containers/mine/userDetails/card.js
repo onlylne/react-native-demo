@@ -43,7 +43,7 @@ export default class MineCard extends Component {
           </View>
           <View style={styles.erCode}>
             <Image style={{width: this.state.imgW, height: this.state.imgW}}
-                   source={{uri: 'http://47.52.202.88:8000/img/qr/201802061229542165.jpg'}}/>
+                   source={require('../../../images/ercode.png')}/>
           </View>
         </View>
       </View>
