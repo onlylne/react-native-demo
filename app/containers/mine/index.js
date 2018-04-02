@@ -8,7 +8,7 @@ import {
   TouchableHighlight,
 } from 'react-native'
 
-@connect()
+@connect(({app})=>({app}))
 export default class Mine extends Component {
 
   static navigationOptions = {
@@ -23,8 +23,8 @@ export default class Mine extends Component {
   };
 
   render() {
-
     const { navigate } = this.props.navigation
+    const { username } = this.props.app.userInfo
 
     return (
       <View style={styles.container}>
@@ -34,7 +34,7 @@ export default class Mine extends Component {
           <View style={styles.userInfoBox}>
             <Image source={require('../../images/headImg.png')} style={{width: 60, height: 60}}/>
             <View style={styles.mgl10}>
-              <Text style={styles.mgb10}>joiner</Text>
+              <Text style={styles.mgb10}>{username}</Text>
               <Text>a550884136</Text>
             </View>
           </View>

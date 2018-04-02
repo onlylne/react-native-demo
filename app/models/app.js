@@ -8,6 +8,9 @@ export default {
     login: false,
     loading: true,
     fetching: false,
+    userInfo: {
+
+    }
   },
   reducers: {
     updateState(state, {payload}) {
@@ -16,10 +19,8 @@ export default {
   },
   effects: {
     * loadStorage(action, {call, put}) {
-      console.log('123')
       const user = yield call(Storage.get, 'userInfo', false)
       if (user) {
-        console.log(user);
         yield put(
           NavigationActions.reset({
             index: 0,
@@ -27,7 +28,7 @@ export default {
           })
         )
       }
-      yield put(createAction('updateState')({loading: false}))
+      yield put(createAction('updateState')({loading: false, userInfo: user}))
     },
     * login({payload}, {call, put}) {
       Toast.loading('登录中...', 0);
@@ -51,7 +52,7 @@ export default {
           area: '四川 成都',
           signature: '大概是个傻子吧！',
         }
-        // // yield put(createAction('updateState')({ login, fetching: false }))
+        // yield put(createAction('updateState')({ login, fetching: false }))
         Storage.set('userInfo', user)
       }
     },

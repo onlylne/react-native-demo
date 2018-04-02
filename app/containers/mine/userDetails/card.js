@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { connect } from 'react-redux'
 import {
   View,
   Text,
@@ -6,7 +7,9 @@ import {
   Image,
   Dimensions
 } from 'react-native';
+import { Storage } from '../../../utils'
 
+@connect(({app}) => ({app}))
 export default class MineCard extends Component {
   static navigationOptions = ({ navigation }) => ({
     headerTitle: '二维码名片',
@@ -21,15 +24,10 @@ export default class MineCard extends Component {
 
   componentWillMount() {
     // todo 读取用户数据 storage
-    // Image.getSize('http://47.52.202.88:8000/img/qr/201802061229542165.jpg', (width, height) => {
-    //   console.log(width, height);
-    //   this.setState({
-    //     imgW: width,
-    //   });
-    // });
   }
 
   render() {
+    const { area, ercode, gander, headImg, signature, username } = this.props.app.userInfo
 
     return (
       <View style={styles.container}>
@@ -37,8 +35,8 @@ export default class MineCard extends Component {
           <View style={styles.userInfo}>
             <Image source={require('../../../images/headImg.png')} style={{width: 60, height: 60, marginRight: 20}}/>
             <View>
-              <Text>joiner</Text>
-              <Text style={styles.mgt6}>中国🇨🇳</Text>
+              <Text>{username}</Text>
+              <Text style={styles.mgt6}>{area}🇨🇳</Text>
             </View>
           </View>
           <View style={styles.erCode}>

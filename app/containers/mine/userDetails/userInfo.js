@@ -1,4 +1,5 @@
-import React, {Component} from 'react';
+import React, {Component} from 'react'
+import {connect} from 'react-redux'
 import {
   StyleSheet,
   View,
@@ -7,24 +8,27 @@ import {
   Image,
   ScrollView,
   Modal,
-} from 'react-native';
+} from 'react-native'
 
+@connect(({app}) => ({app}))
 export default class UserInfo extends Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      modalVisible: false,
-    }
-  }
 
   static navigationOptions = {
     headerTitle: '个人信息',
     headerBackTitle: '返回',
   };
 
+  constructor(props) {
+    super(props)
+    this.state = {
+      modalVisible: false,
+    }
+  }
+
   render() {
-    const {navigate} = this.props.navigation;
+    const {navigate} = this.props.navigation
+    const {area, ercode, gander, headImg, signature, username} = this.props.app.userInfo
+    const ganderList = ['未知', '男', '女']
     return (
       <View style={styles.container}>
         <TouchableHighlight onPress={() => {
@@ -35,11 +39,11 @@ export default class UserInfo extends Component {
           </View>
         </TouchableHighlight>
         <TouchableHighlight onPress={() => {
-          navigate('EditPage', {title: '修改昵称', content: 'joiner'});
+          navigate('EditPage', {title: '修改昵称', content: username});
         }}>
           <View style={styles.user_item}>
             <Text>昵称</Text>
-            <Text style={styles.color1}>joiner</Text>
+            <Text style={styles.color1}>{username}</Text>
           </View>
         </TouchableHighlight>
         <TouchableHighlight onPress={() => {
@@ -62,7 +66,7 @@ export default class UserInfo extends Component {
         }}>
           <View style={styles.user_item}>
             <Text>性别</Text>
-            <Text style={styles.color1}>男</Text>
+            <Text style={styles.color1}>{ganderList[gander]}</Text>
           </View>
         </TouchableHighlight>
 
@@ -71,19 +75,19 @@ export default class UserInfo extends Component {
         }}>
           <View style={styles.user_item}>
             <Text>地区</Text>
-            <Text style={styles.color1}>中国</Text>
+            <Text style={styles.color1}>{area}</Text>
           </View>
         </TouchableHighlight>
         <TouchableHighlight onPress={() => {
-          navigate('EditPage', {title: '个性签名', content: '零零落落'});
+          navigate('EditPage', {title: '个性签名', content: signature})
         }}>
           <View style={styles.user_item}>
             <Text>个性签名</Text>
-            <Text style={styles.color1}>零零落落</Text>
+            <Text style={styles.color1}>{signature}</Text>
           </View>
         </TouchableHighlight>
         <TouchableHighlight onPress={() => {
-          navigate('UserAddress');
+          navigate('UserAddress')
         }}>
           <View style={styles.user_item}>
             <Text>我的地址</Text>
@@ -96,13 +100,29 @@ export default class UserInfo extends Component {
           visible={this.state.modalVisible}
         >
           <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.4)'}}>
-            <View style={{width: '80%', backgroundColor: '#fff', borderRadius: 8, padding: 10,}}>
-              <Text onPress={() => {
+            <View style={{width: '60%', backgroundColor: '#fff', borderRadius: 8, padding: 10,}}>
+              <TouchableHighlight onPress={() => {
                 this.setState({modalVisible: false})
-              }}>男</Text>
-              <Text onPress={() => {
+              }}>
+                <View style={{flexDirection: 'row', alignItems: 'center', backgroundColor: '#fff',}}>
+                  <Image
+                    source={gander === 1 ? require('../../../images/choosed.png') : require('../../../images/unchoosed.png')}
+                    style={{width: 20, height: 20, marginRight: 20}}
+                  />
+                  <Text>男</Text>
+                </View>
+              </TouchableHighlight>
+              <TouchableHighlight style={{ marginTop: 10,}} onPress={() => {
                 this.setState({modalVisible: false})
-              }}>女</Text>
+              }}>
+                <View style={{flexDirection: 'row', alignItems: 'center', backgroundColor: '#fff',}}>
+                  <Image
+                    source={gander === 2 ? require('../../../images/choosed.png') : require('../../../images/unchoosed.png')}
+                    style={{width: 20, height: 20, marginRight: 20}}
+                  />
+                  <Text>女</Text>
+                </View>
+              </TouchableHighlight>
             </View>
           </View>
         </Modal>
