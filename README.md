@@ -34,6 +34,6 @@ react-native run-ios # or react-native run-android
             |--storage.js (本地数据存储)
         
 其他的就不写了
-持续更新中...
+简单的demo
 
 MIT
